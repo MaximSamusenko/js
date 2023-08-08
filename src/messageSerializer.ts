@@ -1,4 +1,3 @@
-import superjson from 'superjson';
 
 export type RequestMessage<SERVICE_ID> = { id: number, method: string, params: unknown[], service: SERVICE_ID };
 export type ResponseMessage = { id: number, result: unknown };
@@ -30,18 +29,18 @@ export interface MessageSerializer<T, SERVICE_ID> {
 
 export class JsonRpcMessageSerializer<SERVICE_ID> implements MessageSerializer<string, SERVICE_ID> {
     deserializeMessage(message: string): ResponseMessage | RequestMessage<SERVICE_ID> | ErrorMessage {
-        return superjson.parse(message);
+        return JSON.parse(message);
     }
 
     serializeResponse(responseMessage: ResponseMessage): string {
-        return superjson.stringify(responseMessage);
+        return JSON.stringify(responseMessage);
     }
 
     serializeRequest(requestMessage: RequestMessage<SERVICE_ID>): string {
-        return superjson.stringify(requestMessage);
+        return JSON.stringify(requestMessage);
     }
 
     serializeError(errorMessage: ErrorMessage): string {
-        return superjson.stringify(errorMessage);
+        return JSON.stringify(errorMessage);
     }
 }

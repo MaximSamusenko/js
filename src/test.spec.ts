@@ -26,23 +26,36 @@ describe('basic', () => {
             }
         }
 
-        const serviceProxyA = serviceProxy<SERVICE_ID>(messageSenderA).register<PingService>(PING_SERVICE, {
-            ping(message, value) {
-                return Promise.resolve(`ping ${message} ${value}`);
-            },
-            ping2(value) {
-                return Promise.resolve(`ping2 ${value}`);
-            },
-        });
+        const serviceProxyA = serviceProxy<SERVICE_ID>(messageSenderA)
+            .register<PingService>(PING_SERVICE, {
+                ping(message, value) {
+                    return Promise.resolve(`ping ${message} ${value}`);
+                },
+                ping2(value) {
+                    return Promise.resolve(`ping2 ${value}`);
+                },
+            }).register<PongService>(PONG_SERVICE, {
+                pong(message, value) {
+                    return Promise.resolve(`pong A ${message} ${value}`);
+                },
+            });
 
-        const serviceProxyB = serviceProxy<SERVICE_ID>(messageSenderB).register<PongService>(PONG_SERVICE, {
-            pong(message, value) {
-                return Promise.resolve(`pong ${message} ${value}`);
-            },
-        });
+        const serviceProxyB = serviceProxy<SERVICE_ID>(messageSenderB)
+            .register<PongService>(PONG_SERVICE, {
+                pong(message, value) {
+                    return Promise.resolve(`pong ${message} ${value}`);
+                },
+            });
 
         const pongService = serviceProxyA.getService<PongService>(PONG_SERVICE);
         const res = await pongService.pong('pong message', 'pong value');
+
+        const pingBService = serviceProxyA.getService<PingService>(PING_SERVICE);
+        await expect(() => pingBService.ping('test', 'test')).rejects.toMatchInlineSnapshot(`
+{
+  "message": "SERVICE_IS_NOT_IMPLEMENTED",
+}
+`);
 
         expect(res).toMatchInlineSnapshot(`"pong pong message pong value"`);
 
@@ -52,5 +65,9 @@ describe('basic', () => {
 
         const ping2Res = await pingService.ping2('ping2 message');
         expect(ping2Res).toMatchInlineSnapshot(`"ping2 ping2 message"`);
+
+        const pongServiceA = serviceProxyB.getService<PongService>(PONG_SERVICE);
+        const pongARes = await pongServiceA.pong('pongA', 'pongA');
+        expect(pongARes).toMatchInlineSnapshot(`"pong A pongA pongA"`);
     })
 });

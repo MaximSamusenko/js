@@ -30,8 +30,5 @@
     "splitting": false,
     "sourcemap": true,
     "clean": true
-  },
-  "dependencies": {
-    "superjson": "^1.13.1"
   }
 }

@@ -42,16 +42,18 @@ export class SimpleServiceProxy<T, K, SERVICE_ID> implements ServiceProxy<T, K, 
         const serviceImplementation = this.serviceImplementations.get(message.service);
         if (!serviceImplementation) {
             this.errorHandler({ errCode: "SERVICE_IS_NOT_IMPLEMENTED", details: { message, context } });
+            this.sendErrorMessage({ id: message.id, error: { message: "SERVICE_IS_NOT_IMPLEMENTED" } });
             return;
         }
         if (!(message.method in serviceImplementation)) {
             this.errorHandler({ errCode: "ACTION_NOT_FOUND", details: { message, context } });
+            this.sendErrorMessage({ id: message.id, error: { message: "ACTION_NOT_FOUND" } });
             return;
         }
 
         const promise = serviceImplementation[message.method].call(serviceImplementation, ...message.params, context) as Promise<any>;
         promise.catch((err) => {
-            this.sendErrorMessage(message.id, err);
+            this.sendErrorMessage({ id: message.id, error: { message: err.message } });
         }).then((value) => {
             this.sendResponseMessage(message.id, value);
         });
@@ -92,8 +94,8 @@ export class SimpleServiceProxy<T, K, SERVICE_ID> implements ServiceProxy<T, K, 
         this.messageSender.sendMessage(message);
     }
 
-    private sendErrorMessage<R>(id: number, error: Error): void {
-        const message = this.messageSerializer.serializeError({ id, error });
+    private sendErrorMessage<R>(error: ErrorMessage): void {
+        const message = this.messageSerializer.serializeError(error);
         this.messageSender.sendMessage(message);
     }
 
