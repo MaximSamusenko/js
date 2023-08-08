@@ -2,7 +2,10 @@
   "name": "simple-service-proxy",
   "version": "1.0.5",
   "description": "Enables to proxy remote services",
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "source": "src/index.ts",
+  "files": ["dist", "src"],
   "scripts": {
     "test": "jest"
   },
