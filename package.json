@@ -1,6 +1,6 @@
 {
   "name": "simple-service-proxy",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Enables to proxy remote services",
   "main": "index.ts",
   "scripts": {
