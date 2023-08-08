@@ -1,12 +1,12 @@
 {
-  "name": "service-proxy",
+  "name": "simple-service-proxy",
   "version": "1.0.0",
   "description": "Enables to proxy remote services",
   "main": "index.ts",
   "scripts": {
     "test": "jest"
   },
-  "author": "samumax",
+  "author": "m.v.samusenko",
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^29.5.2",
