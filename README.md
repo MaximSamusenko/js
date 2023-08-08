@@ -3,7 +3,7 @@
 ## how to use
 
 1. Declare interfaces and service names
-```
+```ts
 type SERVICE_ID = typeof PING_SERVICE | typeof PONG_SERVICE;
 
 const PING_SERVICE = 'PING_SERVICE';
@@ -19,7 +19,7 @@ interface PongService extends Service {
 ```
 
 2. Implement MessageSender interface
-```
+```ts
 export interface MessageSender<T,K> {
     subscribe(onMessage: (message: T, context: K) => void): void;
     sendMessage(message: T, context?: K): void;
@@ -27,7 +27,7 @@ export interface MessageSender<T,K> {
 ```
 
 3. Create client and register services
-```
+```ts
 const clientA = serviceProxy<SERVICE_ID>(messageSender)
     .register<PingService>(PING_SERVICE, {
         ping(message, value) {
@@ -44,7 +44,7 @@ const clientA = serviceProxy<SERVICE_ID>(messageSender)
 ```
 
 4. Create another client to communicate with
-```
+```ts
 const clientB = serviceProxy<SERVICE_ID>(messageSender)
             .register<PongService>(PONG_SERVICE, {
                 pong(message, value) {
@@ -53,12 +53,12 @@ const clientB = serviceProxy<SERVICE_ID>(messageSender)
             });
 ```
 5. Invoke services from clientB and vice versa
-```
+```ts
 const pongService = clientA.getService<PongService>(PONG_SERVICE);
 const res = await pongService.pong('pong message', 'pong value');
 ```
 ---
-```
+```ts
 const pingService = clientB.getService<PingService>(PING_SERVICE);
 const pingRes = await pingService.ping('ping message', 'ping value');
 ```
