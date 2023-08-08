@@ -1,6 +1,6 @@
 {
   "name": "simple-service-proxy",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Enables to proxy remote services",
   "main": "index.ts",
   "scripts": {
@@ -35,5 +35,10 @@
     "type": "git",
     "url": "https://github.com/MaximSamusenko/js.git"
   },
-  "keywords": ["ts", "proxy", "client-server", "service"]
+  "keywords": [
+    "ts",
+    "proxy",
+    "client-server",
+    "service"
+  ]
 }
