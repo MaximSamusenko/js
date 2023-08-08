@@ -9,3 +9,5 @@ export function serviceProxy<SERVICE_ID>(messageSender: MessageSender<string, nu
         console.error(err);
     })
 }
+
+export { MessageSender, JsonRpcMessageSerializer, SimpleRequestIdRegistry, ProxyServiceFactory, SimpleServiceProxy };
