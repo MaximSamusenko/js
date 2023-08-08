@@ -1,7 +1,19 @@
 import { serviceProxy } from "./index";
 import { MessageSender } from "./messageSender";
-import { PING_SERVICE, PONG_SERVICE, PingService, PongService, SERVICE_ID } from "./services";
+import { Service } from "./serviceTypes";
 
+type SERVICE_ID = typeof PING_SERVICE | typeof PONG_SERVICE;
+
+const PING_SERVICE = 'PING_SERVICE';
+interface PingService extends Service {
+    ping(message: string, value: string): Promise<string>;
+    ping2(value: string): Promise<string>;
+}
+
+const PONG_SERVICE = 'PONG_SERVICE';
+interface PongService extends Service {
+    pong(message: string, value: string): Promise<string>;
+}
 
 describe('basic', () => {
     it('works', async () => {
