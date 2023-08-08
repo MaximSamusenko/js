@@ -30,5 +30,10 @@
     "splitting": false,
     "sourcemap": true,
     "clean": true
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MaximSamusenko/js.git"
+  },
+  "keywords": ["ts", "proxy", "client-server", "service"]
 }
