@@ -1,12 +1,12 @@
 {
-  "name": "interop",
+  "name": "service-proxy",
   "version": "1.0.0",
-  "description": "",
+  "description": "Enables to proxy remote services",
   "main": "index.ts",
   "scripts": {
     "test": "jest"
   },
-  "author": "",
+  "author": "samumax",
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^29.5.2",
